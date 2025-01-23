@@ -10,8 +10,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class User {
-    private String username;
-    private String email;
-    private String password;
+public class Item {
+    private String code;
+    private String discription;
+    private Double unitPrice;
+    private Integer stock;
 }
