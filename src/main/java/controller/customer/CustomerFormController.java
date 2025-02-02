@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -48,6 +49,19 @@ public class CustomerFormController {
 
     @FXML
     void btnAddCustomerAction(ActionEvent event) {
+        boolean isCustomerAdd = new CustomerController().addCustomer(new Customer(
+                        txtID.getText(),
+                        txtName.getText(),
+                        txtAddress.getText(),
+                        Double.parseDouble(txtSalary.getText())
+                )
+        );
+
+        if (isCustomerAdd) {
+            new Alert(Alert.AlertType.INFORMATION, "Customer Added").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Customer Not Added").show();
+        }
 
     }
 

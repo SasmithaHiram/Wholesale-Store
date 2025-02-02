@@ -1,9 +1,11 @@
-package controller;
+package controller.order;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import controller.DashboardFormController;
 import controller.customer.CustomerController;
 import controller.item.ItemController;
+import db.DBConnection;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,26 +14,30 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.Customer;
 import model.Item;
+import model.Order;
+import model.OrderDetail;
 import model.TM.CartTM;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static java.lang.String.format;
 
 public class OrderFormController implements Initializable {
 
+    public JFXTextField txtOrderId;
     @FXML
     private JFXComboBox cmbCustomerId;
 
@@ -85,7 +91,7 @@ public class OrderFormController implements Initializable {
 
     private void setDateAndTime() {
         Date date = new Date();
-        SimpleDateFormat Dateformat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat Dateformat = new SimpleDateFormat("yyyy-MM-dd");
         String format = Dateformat.format(date);
         lblDate.setText(format);
 
@@ -135,7 +141,32 @@ public class OrderFormController implements Initializable {
         lblNetTotal.setText(total.toString());
     }
     @FXML
-    void btnPlaceOrderAction(ActionEvent event) {
+    void btnPlaceOrderAction(ActionEvent event) throws SQLException {
+        String orderId = txtOrderId.getText();
+        String date = lblDate.getText();
+        String customerId = cmbCustomerId.getValue().toString();
+
+        List<OrderDetail> orderDetails = new ArrayList<>();
+
+        cartTMS.forEach(cartTM -> {
+            orderDetails.add(
+            new OrderDetail(
+                    orderId,
+                    cartTM.getCode(),
+                    cartTM.getQty(),
+                    cartTM.getUnitPrice()
+            )
+            );
+        });
+
+        Order order = new Order(orderId, date, customerId, orderDetails);
+
+        if (new OrderController().placeOrder(order)) {
+            new Alert(Alert.AlertType.INFORMATION, "Order Placed", ButtonType.OK).show();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Order Not Placed", ButtonType.OK).show();
+        }
 
     }
 
@@ -178,5 +209,9 @@ public class OrderFormController implements Initializable {
         txtAddress.setText(customer.getAddress());
     }
 
+    public void btnCommitAction(ActionEvent actionEvent) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        connection.commit();
+    }
 }
 
