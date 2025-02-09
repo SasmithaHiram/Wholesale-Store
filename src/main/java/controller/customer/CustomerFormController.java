@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 
@@ -17,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CustomerFormController {
 
@@ -49,6 +47,9 @@ public class CustomerFormController {
 
     @FXML
     void btnAddCustomerAction(ActionEvent event) {
+        if (txtID.getText().isEmpty() || txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtSalary.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "ALL FIE LD MUST BE FILLED OUT!").show();
+        }
         boolean isCustomerAdd = new CustomerController().addCustomer(new Customer(
                         txtID.getText(),
                         txtName.getText(),
@@ -59,6 +60,10 @@ public class CustomerFormController {
 
         if (isCustomerAdd) {
             new Alert(Alert.AlertType.INFORMATION, "Customer Added").show();
+            txtID.clear();
+            txtName.clear();
+            txtAddress.clear();
+            txtSalary.clear();
         } else {
             new Alert(Alert.AlertType.ERROR, "Customer Not Added").show();
         }
@@ -67,21 +72,63 @@ public class CustomerFormController {
 
     @FXML
     void btnDeleteCustomerAction(ActionEvent event) {
+        Optional<ButtonType> buttonAlert = new Alert(Alert.AlertType.CONFIRMATION, "ARE YOU SURE YOU WANT TO DELETE THIS", ButtonType.YES, ButtonType.NO).showAndWait();
+        ButtonType buttonType = buttonAlert.orElse(ButtonType.NO);
+
+        if (buttonType == ButtonType.YES) {
+            if (new CustomerController().deleteCustomer(txtID.getText())) {
+                new Alert(Alert.AlertType.INFORMATION, "CUSTOMER DELETED SUCCESSFULLY!").show();
+                txtID.clear();
+                txtName.clear();
+                txtAddress.clear();
+                txtSalary.clear();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "FAILED TO DELETE CUSTOMER. PLEASE TRY AGAIN.").show();
+            }
+        }
 
     }
 
     @FXML
     void btnReloadCustomersAction(ActionEvent event) {
-loadTable();
+    loadTable();
+
     }
 
     @FXML
     void btnSearchCustomerAction(ActionEvent event) {
+        Customer searchedCustomer = new CustomerController().searchCustomer(txtID.getText());
+
+        if (searchedCustomer == null) {
+            new Alert(Alert.AlertType.INFORMATION, "Customer Not Found").show();
+        }
+
+        txtName.setText(searchedCustomer.getName());
+        txtAddress.setText(searchedCustomer.getAddress());
+        txtSalary.setText(String.valueOf(searchedCustomer.getSalary()));
 
     }
 
     @FXML
     void btnUpdateCustomerAction(ActionEvent event) {
+        boolean isCustomerUpdate = new CustomerController().updateCustomer(
+                new Customer(
+                        txtID.getText(),
+                        txtName.getText(),
+                        txtAddress.getText(),
+                        Double.parseDouble(txtSalary.getText())
+                )
+        );
+
+        if (isCustomerUpdate) {
+            new Alert(Alert.AlertType.INFORMATION, "Customer Updated Successfully").show();
+            txtID.clear();
+            txtName.clear();
+            txtAddress.clear();
+            txtSalary.clear();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed To Update Customer.").show();
+        }
 
     }
 

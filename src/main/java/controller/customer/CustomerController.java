@@ -20,7 +20,7 @@ public class CustomerController implements CustomerService{
             preparedStatement.setObject(2, customer.getName());
             preparedStatement.setObject(3, customer.getAddress());
             preparedStatement.setObject(4, customer.getSalary());
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +28,19 @@ public class CustomerController implements CustomerService{
 
     @Override
     public boolean updateCustomer(Customer customer) {
-        return false;
+        String SQL = "UPDATE customer SET name=?, address=?, salary=? WHERE id=?";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setObject(1, customer.getName());
+            preparedStatement.setObject(2, customer.getAddress());
+            preparedStatement.setObject(3, customer.getSalary());
+            preparedStatement.setObject(4, customer.getId());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -84,6 +96,12 @@ public class CustomerController implements CustomerService{
 
     @Override
     public boolean deleteCustomer(String id) {
-        return false;
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+           return connection.createStatement().executeUpdate("DELETE from customer WHERE id='" + id + "'") > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }
