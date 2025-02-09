@@ -12,4 +12,5 @@ public class Starter extends Application {
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("view/login-form.fxml"))));
         stage.show();
     }
+
 }

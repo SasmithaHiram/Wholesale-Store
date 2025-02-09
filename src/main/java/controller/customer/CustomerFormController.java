@@ -1,6 +1,5 @@
 package controller.customer;
 
-import db.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,12 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class CustomerFormController {
@@ -48,8 +41,9 @@ public class CustomerFormController {
     @FXML
     void btnAddCustomerAction(ActionEvent event) {
         if (txtID.getText().isEmpty() || txtName.getText().isEmpty() || txtAddress.getText().isEmpty() || txtSalary.getText().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "ALL FIE LD MUST BE FILLED OUT!").show();
+            new Alert(Alert.AlertType.WARNING, "ALL FIE LD MUST BE FILLED OUT").show();
         }
+
         boolean isCustomerAdd = new CustomerController().addCustomer(new Customer(
                         txtID.getText(),
                         txtName.getText(),
@@ -59,13 +53,13 @@ public class CustomerFormController {
         );
 
         if (isCustomerAdd) {
-            new Alert(Alert.AlertType.INFORMATION, "Customer Added").show();
+            new Alert(Alert.AlertType.INFORMATION, "CUSTOMER ADDED").show();
             txtID.clear();
             txtName.clear();
             txtAddress.clear();
             txtSalary.clear();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Customer Not Added").show();
+            new Alert(Alert.AlertType.ERROR, "CUSTOMER NOT ADDED").show();
         }
 
     }
@@ -77,13 +71,13 @@ public class CustomerFormController {
 
         if (buttonType == ButtonType.YES) {
             if (new CustomerController().deleteCustomer(txtID.getText())) {
-                new Alert(Alert.AlertType.INFORMATION, "CUSTOMER DELETED SUCCESSFULLY!").show();
+                new Alert(Alert.AlertType.INFORMATION, "CUSTOMER DELETED SUCCESSFULLY").show();
                 txtID.clear();
                 txtName.clear();
                 txtAddress.clear();
                 txtSalary.clear();
             } else {
-                new Alert(Alert.AlertType.ERROR, "FAILED TO DELETE CUSTOMER. PLEASE TRY AGAIN.").show();
+                new Alert(Alert.AlertType.ERROR, "FAILED TO DELETE CUSTOMER. PLEASE TRY AGAIN").show();
             }
         }
 
@@ -100,7 +94,7 @@ public class CustomerFormController {
         Customer searchedCustomer = new CustomerController().searchCustomer(txtID.getText());
 
         if (searchedCustomer == null) {
-            new Alert(Alert.AlertType.INFORMATION, "Customer Not Found").show();
+            new Alert(Alert.AlertType.INFORMATION, "CUSTOMER NOT FOUND").show();
         }
 
         txtName.setText(searchedCustomer.getName());
@@ -121,13 +115,13 @@ public class CustomerFormController {
         );
 
         if (isCustomerUpdate) {
-            new Alert(Alert.AlertType.INFORMATION, "Customer Updated Successfully").show();
+            new Alert(Alert.AlertType.INFORMATION, "CUSTOMER UPDATED SUCCESSFULLY").show();
             txtID.clear();
             txtName.clear();
             txtAddress.clear();
             txtSalary.clear();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Failed To Update Customer.").show();
+            new Alert(Alert.AlertType.ERROR, "FAILED TO UPDATE CUSTOMER").show();
         }
 
     }
@@ -137,7 +131,6 @@ public class CustomerFormController {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-
 
         ObservableList<Customer> customerObservableList= FXCollections.observableArrayList();
 

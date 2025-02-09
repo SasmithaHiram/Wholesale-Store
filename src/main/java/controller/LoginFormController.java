@@ -37,6 +37,7 @@ public class LoginFormController {
         Connection connection = DBConnection.getInstance().getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(SQL);
+
         if (resultSet.next()) {
             User user = new User(
                     resultSet.getString(2),
@@ -49,11 +50,11 @@ public class LoginFormController {
                 stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard-form.fxml"))));
                 stage.show();
             }else {
-                new Alert(Alert.AlertType.ERROR, "Invalid Password", ButtonType.OK).show();
+                new Alert(Alert.AlertType.ERROR, "INVALID PASSWORD", ButtonType.OK).show();
             }
             System.out.println(user);
         }else{
-            new Alert(Alert.AlertType.ERROR, "User Not Found", ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, "USER NOT FOUND", ButtonType.OK).show();
         }
 
     }
@@ -63,7 +64,6 @@ public class LoginFormController {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/register-form.fxml"))));
         stage.show();
-
     }
 
 }

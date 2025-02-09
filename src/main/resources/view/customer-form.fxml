@@ -16,7 +16,10 @@
       <TextField fx:id="txtName" layoutX="305.0" layoutY="82.0" promptText="Name" />
       <TextField fx:id="txtAddress" layoutX="147.0" layoutY="124.0" promptText="Address" />
       <TextField fx:id="txtSalary" layoutX="305.0" layoutY="124.0" promptText="Salary" />
-      <Button layoutX="167.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnAddCustomerAction" prefHeight="25.0" prefWidth="59.0" text="Add" />
+      <Button layoutX="167.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnAddCustomerAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #28a745;" text="Add" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
       <TableView fx:id="tbCustomers" layoutX="54.0" layoutY="206.0" prefHeight="145.0" prefWidth="493.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="48.0" text="Id" />
@@ -30,9 +33,21 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button layoutX="236.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnSearchCustomerAction" prefHeight="25.0" prefWidth="59.0" text="Search" />
-      <Button layoutX="305.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnUpdateCustomerAction" prefHeight="25.0" prefWidth="59.0" text="Update" />
-      <Button layoutX="374.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnDeleteCustomerAction" prefHeight="25.0" prefWidth="59.0" text="Delete" />
-      <Button layoutX="488.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnReloadCustomersAction" prefHeight="25.0" prefWidth="59.0" text="Reload" />
+      <Button layoutX="236.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnSearchCustomerAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #007bff;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="305.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnUpdateCustomerAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #fd7e14;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="374.0" layoutY="166.0" mnemonicParsing="false" onAction="#btnDeleteCustomerAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #dc3545;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="488.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnReloadCustomersAction" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #6c757d;" text="Reload" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>

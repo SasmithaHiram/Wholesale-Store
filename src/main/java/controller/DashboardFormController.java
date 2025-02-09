@@ -23,10 +23,18 @@ public class DashboardFormController {
             Parent load = FXMLLoader.load(resource);
             loadFormContent.getChildren().clear();
             loadFormContent.getChildren().add(load);
+
         }
 
         @FXML
-        void btnItemFormAction(ActionEvent event) {
+        void btnItemFormAction(ActionEvent event) throws IOException {
+            URL resource = this.getClass().getResource("/view/item-form.fxml");
+
+            assert resource != null;
+
+            Parent load = FXMLLoader.load(resource);
+            loadFormContent.getChildren().clear();
+            loadFormContent.getChildren().add(load);
             
         }
 
@@ -39,6 +47,7 @@ public class DashboardFormController {
             Parent load = FXMLLoader.load(resource);
             loadFormContent.getChildren().clear();
             loadFormContent.getChildren().add(load);
+
         }
 
 

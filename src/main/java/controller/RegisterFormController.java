@@ -49,12 +49,11 @@ public class RegisterFormController {
                     preparedStatement.setString(3, basicTextEncryptor.encrypt(user.getPassword()));
                     preparedStatement.executeUpdate();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Username already exists!").showAndWait();
+                    new Alert(Alert.AlertType.ERROR, "USERNAME ALREADY EXISTS").showAndWait();
                 }
             }else{
-                    new Alert(Alert.AlertType.ERROR, "Passwords do not match!").showAndWait();
+                    new Alert(Alert.AlertType.ERROR, "PASSWORDS DO NOT MATCH").showAndWait();
             }
-
         }
 
 }

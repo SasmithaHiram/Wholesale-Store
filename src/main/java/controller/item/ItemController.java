@@ -15,18 +15,49 @@ import java.util.List;
 
 public class ItemController implements ItemService{
     @Override
-    public boolean addItem() {
-        return false;
+    public boolean addItem(Item item) {
+        String SQL = "INSERT INTO item VALUES (?, ?, ?, ?)";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setObject(1, item.getCode());
+            preparedStatement.setObject(2, item.getDiscription());
+            preparedStatement.setObject(3, item.getUnitPrice());
+            preparedStatement.setObject(4, item.getStock());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
-    public boolean updateItem() {
-        return false;
+    public boolean updateItem(Item item) {
+        String SQL = "UPDATE item SET description=?, unitPrice=? , qtyOnHand=? WHERE code=?";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setObject(1, item.getDiscription());
+            preparedStatement.setObject(2, item.getUnitPrice());
+            preparedStatement.setObject(3, item.getStock());
+            preparedStatement.setObject(4, item.getCode());
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
-    public boolean deleteItem() {
-        return false;
+    public boolean deleteItem(String code) {
+        String SQL = "DELETE from item WHERE code='" + code + "'";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            return connection.createStatement().executeUpdate(SQL) > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -67,6 +98,7 @@ public class ItemController implements ItemService{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public ObservableList<String> getItem() {
@@ -74,6 +106,7 @@ public class ItemController implements ItemService{
         List<Item> itemList = getItems();
         itemList.forEach(item -> itemCodeList.add(item.getCode()));
         return itemCodeList;
+
     }
 
     public boolean updateStock(List<OrderDetail> orderDetails) {
@@ -100,4 +133,5 @@ public class ItemController implements ItemService{
             throw new RuntimeException(e);
         }
     }
+
 }

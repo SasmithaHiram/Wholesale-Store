@@ -24,6 +24,7 @@ public class CustomerController implements CustomerService{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -60,6 +61,7 @@ public class CustomerController implements CustomerService{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -81,8 +83,8 @@ public class CustomerController implements CustomerService{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return customerArrayList;
+
     }
 
     public ObservableList<String> getAllCustomersId() {
@@ -92,6 +94,7 @@ public class CustomerController implements CustomerService{
             customerIdList.add(customer.getId());
         });
         return customerIdList;
+
     }
 
     @Override
