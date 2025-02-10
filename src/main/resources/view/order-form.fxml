@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
@@ -54,6 +53,5 @@
          </font>
       </Label>
       <JFXTextField fx:id="txtOrderId" layoutX="452.0" layoutY="19.0" promptText="Order Id" style="-fx-background-color: white;" unFocusColor="WHITE" />
-      <JFXButton layoutX="383.0" layoutY="361.0" onAction="#btnCommitAction" text="Commit" />
    </children>
 </AnchorPane>

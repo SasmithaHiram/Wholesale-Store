@@ -64,6 +64,8 @@ public class LoginFormController {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/register-form.fxml"))));
         stage.show();
+        txtLEmail.clear();
+        txtPassword.clear();
     }
 
 }
